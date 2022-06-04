@@ -2,6 +2,9 @@
 
 mod service;
 
+#[cfg(feature = "util")]
+mod util;
+
 pub use service::RedisService;
 
 #[cfg(test)]

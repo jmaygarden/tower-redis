@@ -1,14 +1,11 @@
 use redis::{
     aio::{ConnectionLike, ConnectionManager},
-    Cmd, RedisError, Value,
+    Cmd, RedisError, RedisFuture, Value,
 };
-use std::{
-    future::Future,
-    pin::Pin,
-    task::{Context, Poll},
-};
+use std::task::{Context, Poll};
 
-/// A service that performs GET requests on a single owned connection
+/// A Tower service for asynchronous Redis request/response performed over a
+/// managed, multplexed connection.
 #[derive(Clone)]
 pub struct RedisService {
     /// Redis connection for queries
@@ -22,10 +19,10 @@ impl RedisService {
     }
 }
 
-impl tower_service::Service<Cmd> for RedisService {
+impl tower::Service<Cmd> for RedisService {
     type Response = Value;
     type Error = RedisError;
-    type Future = ResponseFuture;
+    type Future = RedisFuture<'static, Value>;
 
     fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
         Poll::Ready(Ok(()))
@@ -37,5 +34,3 @@ impl tower_service::Service<Cmd> for RedisService {
         Box::pin(async move { inner.req_packed_command(&req).await })
     }
 }
-
-pub type ResponseFuture = Pin<Box<dyn Future<Output = Result<Value, RedisError>> + Send>>;
