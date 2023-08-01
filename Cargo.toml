@@ -19,7 +19,7 @@ default = []
 util = ["tower/util"]
 
 [dependencies]
-redis = { version = "0.21", features = ["connection-manager", "tokio-comp"] }
+redis = { version = "0.23", features = ["connection-manager", "tokio-comp"] }
 tower = { version = "0.4", default-features = false }
 
 [dev-dependencies]
