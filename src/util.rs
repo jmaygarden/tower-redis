@@ -6,12 +6,12 @@ impl RedisService {
     pub async fn call_service(&self, request: Cmd) -> RedisResult<Value> {
         let mut service = self.clone();
         let service = service.ready().await?;
-        let resposne = service.call(request).await?;
+        let response = service.call(request).await?;
 
-        Ok(resposne)
+        Ok(response)
     }
 
-    pub async fn del<K>(&self, key: K) -> RedisResult<redis::Value>
+    pub async fn del<K>(&self, key: K) -> RedisResult<Value>
     where
         K: ToRedisArgs,
     {
@@ -20,7 +20,7 @@ impl RedisService {
         self.call_service(request).await
     }
 
-    pub async fn get<K>(&self, key: K) -> RedisResult<redis::Value>
+    pub async fn get<K>(&self, key: K) -> RedisResult<Value>
     where
         K: ToRedisArgs,
     {
@@ -29,7 +29,7 @@ impl RedisService {
         self.call_service(request).await
     }
 
-    pub async fn set<K, V>(&self, key: K, value: V) -> RedisResult<redis::Value>
+    pub async fn set<K, V>(&self, key: K, value: V) -> RedisResult<Value>
     where
         K: ToRedisArgs,
         V: ToRedisArgs,
@@ -39,7 +39,7 @@ impl RedisService {
         self.call_service(request).await
     }
 
-    pub async fn set_ex<K, V>(&self, key: K, value: V, seconds: usize) -> RedisResult<redis::Value>
+    pub async fn set_ex<K, V>(&self, key: K, value: V, seconds: usize) -> RedisResult<Value>
     where
         K: ToRedisArgs,
         V: ToRedisArgs,

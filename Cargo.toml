@@ -5,21 +5,21 @@ description = """
 A Tower service for asynchronous Redis request/response performed over a
 managed, multplexed connection.
 """
-documentation = "https://docs.rs/tower-redis/0.2.0"
-edition = "2018"
+documentation = "https://docs.rs/tower-redis/0.2.1"
+edition = "2021"
 homepage = "https://github.com/jmaygarden/tower-redis"
 license = "MIT"
 name = "tower-redis"
 readme = "README.md"
 repository = "https://github.com/jmaygarden/tower-redis"
-version = "0.2.0"
+version = "0.2.1"
 
 [features]
 default = []
 util = ["tower/util"]
 
 [dependencies]
-redis = { version = "0.21", features = ["connection-manager", "tokio-comp"] }
+redis = { version = "0.23", features = ["connection-manager", "tokio-comp"] }
 tower = { version = "0.4", default-features = false }
 
 [dev-dependencies]
