@@ -29,7 +29,9 @@ impl tower::Service<Cmd> for RedisService {
     }
 
     fn call(&mut self, req: Cmd) -> Self::Future {
-        let mut inner = self.inner.clone();
+        let clone = self.inner.clone();
+        // take the service that was ready
+        let mut inner = std::mem::replace(&mut self.inner, clone);
 
         Box::pin(async move { inner.req_packed_command(&req).await })
     }
