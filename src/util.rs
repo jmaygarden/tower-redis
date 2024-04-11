@@ -39,7 +39,7 @@ impl RedisService {
         self.call_service(request).await
     }
 
-    pub async fn set_ex<K, V>(&self, key: K, value: V, seconds: usize) -> RedisResult<Value>
+    pub async fn set_ex<K, V>(&self, key: K, value: V, seconds: u64) -> RedisResult<Value>
     where
         K: ToRedisArgs,
         V: ToRedisArgs,
