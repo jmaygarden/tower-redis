@@ -49,7 +49,7 @@ mod test {
 
             tokio::spawn(async move {
                 let res = call!(service, Cmd::get(key)).unwrap();
-                assert_eq!(res, Value::Data(value.into()));
+                assert_eq!(res, Value::BulkString(value.into()));
 
                 let res = call!(service_clone, Cmd::del(key_clone)).unwrap();
                 assert_eq!(res, Value::Int(1));
