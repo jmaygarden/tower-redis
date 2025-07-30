@@ -1,6 +1,6 @@
 # tower-redis
 
-A Tower service for asynchronous Redis request/response performed over a managed, multplexed connection.
+A Tower service for asynchronous Redis request/response performed over a managed, multiplexed connection.
 
 [![Crates.io][crates-badge]][crates-url]
 [![Documentation][docs-badge]][docs-url]
