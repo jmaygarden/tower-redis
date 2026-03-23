@@ -1,5 +1,5 @@
 use crate::RedisService;
-use redis::{Cmd, RedisResult, ToRedisArgs, Value};
+use redis::{Cmd, RedisResult, ToRedisArgs, ToSingleRedisArg, Value};
 use tower::{Service, ServiceExt};
 
 impl RedisService {
@@ -22,7 +22,7 @@ impl RedisService {
 
     pub async fn get<K>(&self, key: K) -> RedisResult<Value>
     where
-        K: ToRedisArgs,
+        K: ToSingleRedisArg,
     {
         let request = Cmd::get(key);
 
@@ -31,8 +31,8 @@ impl RedisService {
 
     pub async fn set<K, V>(&self, key: K, value: V) -> RedisResult<Value>
     where
-        K: ToRedisArgs,
-        V: ToRedisArgs,
+        K: ToSingleRedisArg,
+        V: ToSingleRedisArg,
     {
         let request = Cmd::set(key, value);
 
@@ -41,8 +41,8 @@ impl RedisService {
 
     pub async fn set_ex<K, V>(&self, key: K, value: V, seconds: u64) -> RedisResult<Value>
     where
-        K: ToRedisArgs,
-        V: ToRedisArgs,
+        K: ToSingleRedisArg,
+        V: ToSingleRedisArg,
     {
         let request = Cmd::set_ex(key, value, seconds);
 
